@@ -1,0 +1,89 @@
+#服务器相关
+server:
+  port: 8765
+
+#druid配置
+druid:
+  type: com.alibaba.druid.pool.DruidDataSource
+  #主节点
+  master:
+    url: jdbc:mysql://127.0.0.1:3306/time?characterEncoding=UTF-8&autoReconnect=true&zeroDateTimeBehavior=convertToNull&useUnicode=true&serverTimezone=GMT
+    username: root
+    password: 123456
+    driverClassName: com.mysql.jdbc.Driver
+    #下面为连接池的补充设置，应用到上面所有数据源中
+    filters: stat,wall,log4j
+    initialSize: 5
+    maxActive: 20
+    maxPoolPreparedStatementPerConnectionSize: 20
+    maxWait: 60000
+    minEvictableIdleTimeMillis: 300000
+    minIdle: 5
+    poolPreparedStatements: true
+    testOnBorrow: false
+    testOnReturn: false
+    testWhileIdle: true
+    timeBetweenEvictionRunsMillis: 60000
+    useGlobalDataSourceStat: true
+    validationQuery: SELECT 1 FROM DUAL
+  #从节点
+  slave:
+    url: jdbc:mysql://192.168.1.209:3306/time?characterEncoding=UTF-8&autoReconnect=true&zeroDateTimeBehavior=convertToNull&useUnicode=true&serverTimezone=GMT
+    username: root
+    password: 123456
+    driverClassName: com.mysql.jdbc.Driver
+    #下面为连接池的补充设置，应用到上面所有数据源中
+    initialSize: 5
+    minIdle: 5
+    maxActive: 20
+    # 配置获取连接等待超时的时间
+    maxWait: 60000
+    # 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
+    timeBetweenEvictionRunsMillis: 60000
+    # 配置一个连接在池中最小生存的时间，单位是毫秒
+    minEvictableIdleTimeMillis: 300000
+    validationQuery: SELECT 1
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false
+    # 打开PSCache，并且指定每个连接上PSCache的大小
+    poolPreparedStatements: true
+    # 配置监控统计拦截的filters，去掉后监控界面sql无法统计，'wall'用于防火墙
+    filters: stat,wall,log4j
+    logSlowSql: true
+    maxPoolPreparedStatementPerConnectionSize: 20
+    # 通过connectProperties属性来打开mergeSql功能；慢SQL记录
+    connectionProperties:
+      druid:
+        stat:
+          mergeSql: true
+          slowSqlMillis: 5000
+    # 合并多个DruidDataSource的监控数据
+    useGlobalDataSourceStat: true
+
+#mybatis
+mybatis:
+  #扫描xml
+  mapper-locations: classpath:com/email/support/mapping/*.xml
+  #配置
+#  configuration:
+    #控制台sql日志输出
+#    log-impl: org.apache.ibatis.logging.log4j2.Log4j2Impl
+  #mybatis返回类型省略全路径包名
+  type-aliases-package: com.email.support.mapper
+
+#pageHelper
+pagehelper:
+  reasonable: true
+  helper-dialect: mysql
+  support-methods-arguments: true
+  params: count=countSql
+
+#日志相关
+logging:
+  level:
+   tk.mybatis: trace
+   com.email.support: trace
+
+
+
