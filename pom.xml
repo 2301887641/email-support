@@ -133,11 +133,6 @@
             <version>1.1.1</version>
         </dependency>
         <dependency>
-            <groupId>tk.mybatis</groupId>
-            <artifactId>mapper-spring-boot-starter</artifactId>
-            <version>1.1.0</version>
-        </dependency>
-        <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>druid</artifactId>
             <version>${druid.version}</version>
@@ -145,6 +140,7 @@
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
+            <scope>runtime</scope>
         </dependency>
         <!--pageHelper -->
         <dependency>
@@ -160,9 +156,13 @@
         </dependency>
         <!--spring redis -->
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-redis</artifactId>
-            <version>1.4.3.RELEASE</version>
+            <groupId>redis.clients</groupId>
+            <artifactId>jedis</artifactId>
+            <version>2.9.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-redis</artifactId>
         </dependency>
         <dependency>
             <groupId>log4j</groupId>
@@ -209,9 +209,6 @@
                     <source>1.8</source>
                     <target>1.8</target>
                     <encoding>UTF-8</encoding>
-                    <compilerArguments>
-                        <extdirs>${project.basedir}/src/main/webapp/WEB-INF/lib</extdirs>
-                    </compilerArguments>
                 </configuration>
             </plugin>
             <!--单元测试-->

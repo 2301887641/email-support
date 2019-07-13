@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.email.support.mapper.MailSendBMapper">
+    <insert id="insert">
+        <selectKey order="AFTER" keyProperty="id" resultType="java.lang.Integer">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        INSERT INTO edm_record_b(
+          send_id,
+          send_user_id,
+          send_to,
+          send_content,
+          send_priority,
+          send_count,
+          remark,
+          version,
+          update_by
+        )
+        VALUES(
+        #{sendId, jdbcType=VARCHAR},
+        #{sendUserId, jdbcType=VARCHAR},
+        #{sendTo, jdbcType=VARCHAR},
+        #{sendContent, jdbcType=VARCHAR},
+        #{sendPriority, jdbcType=INTEGER},
+        #{sendCount, jdbcType=INTEGER},
+        #{remark, jdbcType=VARCHAR},
+        #{version, jdbcType=INTEGER},
+        #{updateBy, jdbcType=VARCHAR}
+        )
+    </insert>
+
+    <update id="updateSelective">
+        UPDATE advertising
+        <set>
+            gmt_modified = #{gmtModified, jdbcType=TIMESTAMP},
+            <if test="name != null">
+                name = #{name},
+            </if>
+            <if test="code != null">
+                code = #{code},
+            </if>
+            <if test="weight != null">
+                weight = #{weight},
+            </if>
+            <if test="displayCount != null">
+                display_count = #{displayCount},
+            </if>
+            <if test="clickCount != null">
+                click_count = #{clickCount},
+            </if>
+            <if test="startTime != null">
+                start_time = #{startTime},
+            </if>
+            <if test="endTime != null">
+                end_time = #{endTime},
+            </if>
+            <if test="status != null">
+                status = #{status},
+            </if>
+            <if test="space !=null and space.id != null">
+                advertising_space_id = #{space.id},
+            </if>
+        </set>
+        WHERE id = #{id}
+    </update>
+</mapper>
