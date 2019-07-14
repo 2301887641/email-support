@@ -13,7 +13,7 @@ public class MailSendEntity {
     private String sendContent;
     private Integer sendPriority;
     private Integer sendCount;
-    private String sendStatus;
+    private Integer sendStatus;
     private String remark;
     private Integer version;
     private String updateBy;
@@ -67,11 +67,11 @@ public class MailSendEntity {
         this.sendCount = sendCount;
     }
 
-    public String getSendStatus() {
+    public Integer getSendStatus() {
         return sendStatus;
     }
 
-    public void setSendStatus(String sendStatus) {
+    public void setSendStatus(Integer sendStatus) {
         this.sendStatus = sendStatus;
     }
 

@@ -3,13 +3,14 @@ package com.email.support.service;
 import com.email.support.entity.MailSendEntity;
 
 /**
+ * redis服务类
  * @author suiguozhen
- * @date 19/07/13
+ * @date 19-7-14 下午2:55
  */
-public interface MailSendService {
+public interface RedisService {
     /**
-     * 插入数据
+     * 添加队列
      * @param mailSendEntity mailSendEntity
      */
-    void insert(MailSendEntity mailSendEntity);
+    void addList(MailSendEntity mailSendEntity);
 }
