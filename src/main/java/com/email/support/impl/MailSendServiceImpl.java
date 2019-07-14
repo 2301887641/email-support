@@ -33,19 +33,24 @@ public class MailSendServiceImpl implements MailSendService {
     @Transactional(rollbackFor = Exception.class)
     @Override
     public void insert(MailSendEntity mailSendEntity) {
-        //添加uuid
         mailSendEntity.setSendId(UUIDUtils.generate());
-        //修改状态
-        mailSendEntity.setSendStatus(UserStatusEnums.QUEUE.getOrdinal());
         int hashCode = mailSendEntity.hashCode();
         int modulo = hashCode % countMapper;
-        //把数据扔到redis中  警惕这样是否会有重复消费问题
-        redisService.addList(mailSendEntity);
         //取模运算 决定插入哪个数据库
         if (modulo > 0) {
             mailSendAMapper.insert(mailSendEntity);
         }else{
             mailSendBMapper.insert(mailSendEntity);
+        }
+        //把数据扔到redis中
+        redisService.addList(mailSendEntity);
+        //修改状态
+        mailSendEntity.setSendStatus(UserStatusEnums.QUEUE.getOrdinal());
+        //修改数据状态
+        if (modulo > 0) {
+            mailSendAMapper.updateSelective(mailSendEntity);
+        }else{
+            mailSendBMapper.updateSelective(mailSendEntity);
         }
     }
 
