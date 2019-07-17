@@ -46,6 +46,8 @@ public class MailSendServiceImpl implements MailSendService {
         redisService.addList(mailSendEntity);
         //修改状态
         mailSendEntity.setSendStatus(UserStatusEnums.QUEUE.getOrdinal());
+        //只要进行消息投递 则+1
+        mailSendEntity.setSendCount(1);
         //修改数据状态
         if (modulo > 0) {
             mailSendAMapper.updateSelective(mailSendEntity);
